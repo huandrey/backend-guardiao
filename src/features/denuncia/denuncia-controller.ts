@@ -3,8 +3,6 @@ import { enviarDenuncia } from './denuncia-service';
 import { upload } from '../../integration/multer';
 
 export const criarDenuncia = async (req: Request, res: Response) => {
-  console.log(req.params)
-  console.log(req.body)
   const denuncia = req.body.denuncia as string;
   const pdf = req.file;
 

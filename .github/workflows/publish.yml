@@ -30,3 +30,11 @@ jobs:
           push: true
           tags: |
             huandrey/backend-guardiao:latest
+          build-args: |
+            ODONTO_GUARDIAO_EMAIL=${{ secrets.ODONTO_GUARDIAO_EMAIL }} 
+            ODONTO_GUARDIAO_PWD=${{ secrets.ODONTO_GUARDIAO_PWD }}
+            CONSELHO_REGIAO_NORTE_EMAIL=${{ secrets.CONSELHO_REGIAO_NORTE_EMAIL }}
+            CONSELHO_REGIAO_SUL_EMAIL=${{ secrets.CONSELHO_REGIAO_SUL_EMAIL }}
+            CONSELHO_REGIAO_LESTE_EMAIL=${{ secrets.CONSELHO_REGIAO_LESTE_EMAIL }}
+            CONSELHO_REGIAO_OESTE_EMAIL=${{ secrets.CONSELHO_REGIAO_OESTE_EMAIL }}
+
