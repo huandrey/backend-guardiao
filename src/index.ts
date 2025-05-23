@@ -17,10 +17,8 @@ const requiredEnvVars = [
 requiredEnvVars.forEach(envVar => {
   if (!process.env[envVar]) {
     console.error(`❌ Variável de ambiente obrigatória faltando: ${envVar}`);
-  } else if (envVar.includes('PWD')) {
-    console.log(`✅ ${envVar}: [DEFINIDO (oculto)]`);
   } else {
-    console.log(`✅ ${envVar}: ${process.env[envVar]}`);
+    console.log(`✅ ${envVar}: [DEFINIDO (oculto)]`);
   }
 });
 
