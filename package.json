@@ -1,7 +1,7 @@
 {
-  "name": "sistema-denuncias",
+  "name": "OdontoGuardião",
   "version": "1.0.0",
-  "description": "Aplicação para envio de denúncias ao conselho tutelar.",
+  "description": "API para envio de denúncias ao Conselho Tutelar de Campina Grande.",
   "main": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",
