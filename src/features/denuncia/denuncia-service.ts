@@ -2,6 +2,7 @@ import { transporter } from '../../integration/nodemailer';
 import { EnviarDenunciaRequest, Regiao } from './@types';
 import { DenunciaRepository } from './denuncia-repository';
 import db from '../../database/db';
+import { v4 as uuidv4 } from 'uuid';
 
 export const EMAIL_POR_REGIAO: Record<Regiao, string> = {
   [Regiao.NORTE]: process.env.CONSELHO_REGIAO_NORTE_EMAIL!,
@@ -14,8 +15,16 @@ export const DenunciaService = async () => {
   const database = await db
   const denunciaRepo = new DenunciaRepository(database);
 
+  function gerarProtocolo(): string {
+    const ano = new Date().getFullYear();
+    const uuid = uuidv4().split('-')[0];
+    return `DEN-${ano}-${uuid.toUpperCase()}`;
+  }
+
   const enviarDenuncia = async (body: EnviarDenunciaRequest) => {
     const emailDestino = EMAIL_POR_REGIAO[body.regiao];
+
+    const protocolo = gerarProtocolo();
 
     const subject = 'Nova Denúncia Recebida - OdontoGuardião';
     const emailBody = `
@@ -23,7 +32,7 @@ export const DenunciaService = async () => {
 
     Uma nova denúncia foi registrada no sistema OdontoGuardião.
 
-    Protocolo: ${body.protocolo}
+    Protocolo: ${protocolo}
     Data: ${new Date().toLocaleDateString('pt-BR')}
     Hora: ${new Date().toLocaleTimeString('pt-BR')}
 
@@ -52,12 +61,12 @@ export const DenunciaService = async () => {
       });
 
       const denunciaId = await denunciaRepo.criar({
-        protocolo: body.protocolo,
+        protocolo,
         regiao: body.regiao,
       })
 
       console.log(`Email enviado: ${info.response}`);
-      return { success: true, protocolo: denunciaId, message: 'Denúncia enviada com sucesso.' };
+      return { success: true, protocolo, message: 'Denúncia enviada com sucesso.' };
     } catch (error) {
       console.error('Erro ao enviar denúncia:', error);
       throw new Error('Erro ao enviar denúncia.');
