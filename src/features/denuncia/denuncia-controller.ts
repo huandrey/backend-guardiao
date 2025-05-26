@@ -32,7 +32,8 @@ export const listaTodasDenuncias = async (req: Request, res: Response) => {
     const denuncias = await service.listaTodasDenuncias()
     return res.status(200).json(denuncias)
   } catch (err) {
-    console.error(err)
+    console.error('Erro ao listar denúncias:', err);
+    return res.status(500).json({ error: 'Erro ao listar denúncias.' });
   }
 }
 
